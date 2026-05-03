@@ -20,7 +20,6 @@ import {
   PromptInputTextarea,
   PromptInputTools,
 } from "@/components/ai-elements/prompt-input";
-import { Loader } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 
 export default function Page() {
@@ -37,17 +36,17 @@ export default function Page() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 relative size-full h-[calc(100vh)]">
+    <div className="max-w-4xl mx-auto p-6 relative size-full h-[calc(100vh-4rem)]">
       <div className="flex flex-col h-full">
         <Conversation className="h-full">
           <ConversationContent>
             {messages.map((message) => (
               <div key={message.id}>
-                {message.parts.map((part, index) => {
+                {message.parts.map((part, i) => {
                   switch (part.type) {
                     case "text":
                       return (
-                        <Fragment key={`${message.id}-${index}`}>
+                        <Fragment key={`${message.id}-${i}`}>
                           <Message from={message.role}>
                             <MessageContent>
                               <MessageResponse>{part.text}</MessageResponse>
@@ -59,14 +58,13 @@ export default function Page() {
                       return null;
                   }
                 })}
-                {(status === "submitted" || status === "streaming") && (
-                  <Spinner />
-                )}
               </div>
             ))}
+            {(status === "submitted" || status === "streaming") && <Spinner />}
           </ConversationContent>
           <ConversationScrollButton />
         </Conversation>
+
         <PromptInput onSubmit={handleSubmit} className="mt-4">
           <PromptInputBody>
             <PromptInputTextarea
@@ -75,8 +73,9 @@ export default function Page() {
             />
           </PromptInputBody>
           <PromptInputTools>
-            <PromptInputSubmit />
+            {/* Model selector, web search, etc. */}
           </PromptInputTools>
+          <PromptInputSubmit disabled={!input && !status} status={status} />
         </PromptInput>
       </div>
     </div>
