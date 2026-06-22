@@ -109,5 +109,3 @@ A aplicação estará disponível em `http://localhost:3000`.
 - `pnpm db:migrate` — aplica as migrações no banco
 - `pnpm db:push` — sincroniza o schema diretamente com o banco (sem gerar arquivo de migração)
 - `pnpm db:studio` — abre o Drizzle Studio para inspecionar os dados
-
-## Demo
